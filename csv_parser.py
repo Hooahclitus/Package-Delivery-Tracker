@@ -31,9 +31,9 @@ class CSV_Parser:
             # Iterate over packages, mapping package data to a hash table and adding it to the main package_table
             for package in csv_reader:
                 # Create a hash table for each package, initializing with key-value pairs from keys and package data
-                tbl = HashTable(13, *[item for key, val in zip(keys, package) for item in (key, val)])
+                tbl = HashTable(13, *[item for key, val in zip(keys, [package[i] for i in range(13)]) for item in (key, val)])
                 
                 # Insert the constructed hash table into package_table using the package ID as the key
-                package_table.insert_item(package[0], tbl)
+                package_table.insert_item(int(package[0]), tbl)
 
         return package_table
