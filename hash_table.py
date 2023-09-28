@@ -11,18 +11,15 @@ class HashTable:
     def __bucket(self, key):
         return self.table[hash(key) % len(self.table)]
 
-    def insert_item(self, key, val):
-        for entry in enumerate((bucket := self.__bucket(key))):
-            if entry[1][0] == key:
-                bucket[entry[0]] = [key, val]
-                return
-        bucket.append([key, val])
-
-    def insert_items(self, *entries):
+    def insert(self, *entries):
         for i in range(0, len(entries), 2):
             key = entries[i]
             val = entries[i + 1]
-            self.insert_item(key, val)
+            for entry in enumerate((bucket := self.__bucket(key))):
+                if entry[1][0] == key:
+                    bucket[entry[0]] = [key, val]
+                    return
+            bucket.append([key, val])
             
     def update_item(self, key, val):
         for entry in enumerate((bucket := self.__bucket(key))):
