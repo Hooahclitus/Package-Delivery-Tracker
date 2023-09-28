@@ -18,7 +18,7 @@ class HashTable:
             for entry in enumerate((bucket := self.__bucket(key))):
                 if entry[1][0] == key:
                     bucket[entry[0]] = [key, val]
-                    return
+                    break
             bucket.append([key, val])
             
     def update(self, *entries):
