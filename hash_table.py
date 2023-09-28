@@ -11,7 +11,7 @@ class HashTable:
     def __bucket(self, key):
         return self.table[hash(key) % len(self.table)]
 
-    def insert(self, key, val):
+    def insert_item(self, key, val):
         for entry in enumerate((bucket := self.__bucket(key))):
             if entry[1][0] == key:
                 bucket[entry[0]] = [key, val]
