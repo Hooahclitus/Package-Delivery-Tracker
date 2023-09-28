@@ -21,8 +21,8 @@ class HashTable:
                     return
             bucket.append([key, val])
             
-    def update(self, key, val):
-        self.insert(key, val)
+    def update(self, *entries):
+        self.insert(*entries)
 
     def remove(self, *keys):
         for key in keys:
