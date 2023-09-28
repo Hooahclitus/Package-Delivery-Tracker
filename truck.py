@@ -19,7 +19,7 @@ def load_cargo(truck, cargo):
 def deliver_packages(truck):
     for package in truck.get_value('cargo'):
         if package.get_value('addr') == truck.get_value('location'):
-            package.update_item('status', 'Delivered')
+            package.update('status', 'Delivered')
 
 def update_distance_traveled(truck, distance):
-    truck.update_item('distance', truck.get_value('distance') + distance)
+    truck.update('distance', truck.get_value('distance') + distance)
