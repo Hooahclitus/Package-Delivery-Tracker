@@ -30,14 +30,16 @@ class HashTable:
                 if entry[0] == key:
                     bucket.remove(entry) 
 
-    def get_entry(self, key):
-        return next(([k, v] for k, v in self.__bucket(key) if k == key), None)
+    def get(self, *keys, entry=False):
+        get_value = (lambda key: next(([k, v] for k, v in self.__bucket(key) if k == key), None) 
+                     if entry == True 
+                     else lambda key: next((v for k, v in self.__bucket(key) if k == key), None))
 
-    def get_value(self, key):
-        return next((v for k, v in self.__bucket(key) if k == key), None)
-    
-    def get_values(self, *keys):
-        return [self.get_value(key) for key in keys]
+        match keys:
+            case [key]:
+                return get_value(key)
+            case [*keys]:
+                return [get_value(key) for key in keys] 
 
     def size(self):
         return len([package for package in self.table])
