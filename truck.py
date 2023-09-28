@@ -1,7 +1,7 @@
 from hash_table import *
 
 def create_truck(cargo=None):
-    table = HashTable(6, 
+    truck = HashTable(6, 
         'hub', '4001 South 700 East',
         'location', '4001 South 700 East', 
         'destination', None,
@@ -10,7 +10,7 @@ def create_truck(cargo=None):
         'cargo', cargo,
         'distance', 0
     )
-    return table
+    return truck
     
 def load_cargo(truck, cargo):
     truck.insert_item('cargo', cargo)
