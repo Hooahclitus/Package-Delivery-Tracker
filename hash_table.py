@@ -24,12 +24,7 @@ class HashTable:
     def update(self, key, val):
         self.insert(key, val)
 
-    def remove_item(self, key):
-        for entry in (bucket := self.__bucket(key)):
-            if entry[0] == key:
-                bucket.remove(entry)
-                
-    def remove_items(self, *keys):
+    def remove(self, *keys):
         for key in keys:
             for entry in (bucket := self.__bucket(key)):
                 if entry[0] == key:
