@@ -21,7 +21,7 @@ class HashTable:
     def insert_items(self, *entries):
         for i in range(0, len(entries), 2):
             key = entries[i]
-            val = entries[i+1]
+            val = entries[i + 1]
             self.insert_item(key, val)
 
     def remove_item(self, key):
