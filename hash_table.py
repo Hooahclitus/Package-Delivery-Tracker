@@ -40,6 +40,9 @@ class HashTable:
 
     def get_value(self, key):
         return next((v for k, v in self.__bucket(key) if k == key), None)
+    
+    def get_values(self, *keys):
+        return [self.get_value(key) for key in keys]
 
     def size(self):
         return len([package for package in self.table])
