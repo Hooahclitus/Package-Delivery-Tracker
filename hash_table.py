@@ -18,6 +18,12 @@ class HashTable:
                 return
         bucket.append([key, val])
 
+    def insert_items(self, *entries):
+        for i in range(0, len(entries), 2):
+            key = entries[i]
+            val = entries[i+1]
+            self.insert_item(key, val)
+
     def remove_item(self, key):
         for entry in (bucket := self.__bucket(key)):
             if entry[0] == key:
