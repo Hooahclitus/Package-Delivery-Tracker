@@ -31,9 +31,9 @@ class HashTable:
                     bucket.remove(entry) 
 
     def get(self, *keys, entry=False):
-        get_value = (lambda key: next(([k, v] for k, v in self.__bucket(key) if k == key), None) 
+        get_value = ((lambda key: next(([k, v] for k, v in self.__bucket(key) if k == key), None)) 
                      if entry == True 
-                     else lambda key: next((v for k, v in self.__bucket(key) if k == key), None))
+                     else (lambda key: next((v for k, v in self.__bucket(key) if k == key), None)))
 
         match keys:
             case [key]:
