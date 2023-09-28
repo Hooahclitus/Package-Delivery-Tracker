@@ -1,12 +1,12 @@
 class HashTable:
-    def __init__(self, size=40, entries=None):
+    def __init__(self, size=40, *entries):
         self.table = [[] for i in range(size)]
 
-        if entries is not None:
-            for i in range(len(entries), 2):
+        if len(entries):
+            for i in range(0, len(entries), 2):
                 key = entries[i]
                 val = entries[i + 1]
-                self.insert(key, val)
+                self.insert_item(key, val)
 
     def __bucket(self, key):
         return self.table[hash(key) % len(self.table)]
