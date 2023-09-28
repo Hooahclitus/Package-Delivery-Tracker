@@ -1,12 +1,9 @@
 from hash_table import *
-from navigation import *
 
 # todo: remove destination if not needed
 def create_truck(cargo=None):
     truck = HashTable(6, 
-        'hub', '4001 South 700 East',
         'location', '4001 South 700 East', 
-        # 'destination', None,
         'depart_time', None,
         'arrive_time', None,
         'cargo', cargo,
@@ -28,23 +25,16 @@ def log_cargo(truck, entry):
     return truck
 
 # todo: add delivery time to log_cargo
-# todo: remove package.update for status
 def deliver_packages(truck):
     for index, package in enumerate(truck.get('cargo')):
         if package.get('addr') == truck.get('location'):
-            # package.update('status', 'Delivered')
             unload_cargo(truck, index) 
-            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: {package.get('status')}")
+            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: Delivered")
     return truck
 
 def update_distance_traveled(truck, distance):
     truck.update('distance', truck.get('distance') + distance)
     return truck
 
-# def change_position(truck):
-#     destination = shortest_destination(truck)
-#     destination_address = destination[0]
-#     distance = destination[1]
-
-#     truck.update('location', destination_address, 'destination', None, 'distance', truck.get_value('distance') + distance)
-#     return truck
+def update_location(truck, address):
+    truck.update('location', address)
