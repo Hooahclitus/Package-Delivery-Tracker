@@ -6,7 +6,7 @@ class HashTable:
             for i in range(0, len(entries), 2):
                 key = entries[i]
                 val = entries[i + 1]
-                self.insert_item(key, val)
+                self.insert(key, val)
 
     def __bucket(self, key):
         return self.table[hash(key) % len(self.table)]
