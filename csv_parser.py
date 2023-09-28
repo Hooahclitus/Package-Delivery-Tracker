@@ -34,6 +34,6 @@ class CSV_Parser:
                 tbl = HashTable(13, *[item for key, val in zip(keys, [package[i] for i in range(13)]) for item in (key, val)])
                 
                 # Insert the constructed hash table into package_table using the package ID as the key
-                package_table.insert_item(int(package[0]), tbl)
+                package_table.insert(int(package[0]), tbl)
 
         return package_table
