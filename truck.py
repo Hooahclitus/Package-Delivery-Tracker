@@ -10,7 +10,8 @@ def create_truck(cargo=None):
         'depart_time', None,
         'arrive_time', None,
         'cargo', cargo,
-        'distance', 0
+        'distance', 0,
+        'log', []
     )
     return truck
     
@@ -18,10 +19,22 @@ def load_cargo(truck, cargo):
     truck.insert('cargo', cargo)
     return truck
 
+def unload_cargo(truck, index):
+    truck.get('cargo').pop(index)
+    return truck
+
+def log_cargo(truck, entry):
+    truck.get('log').append(entry)
+    return truck
+
+# todo: add delivery time to log_cargo
+# todo: remove package.update for status
 def deliver_packages(truck):
-    for package in truck.get('cargo'):
+    for index, package in enumerate(truck.get('cargo')):
         if package.get('addr') == truck.get('location'):
-            package.update('status', 'Delivered')
+            # package.update('status', 'Delivered')
+            unload_cargo(truck, index) 
+            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: {package.get('status')}")
     return truck
 
 def update_distance_traveled(truck, distance):
