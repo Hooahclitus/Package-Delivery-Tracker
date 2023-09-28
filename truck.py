@@ -4,7 +4,7 @@ from hash_table import *
 def create_truck(cargo=None):
     table = HashTable(6, 
         'hub', '4001 South 700 East',
-        'location', None, 
+        'location', '4001 South 700 East', 
         'destination', None,
         'depart_time', None,
         'arrive_time', None,
