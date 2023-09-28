@@ -2,7 +2,7 @@ class HashTable:
     def __init__(self, size=40, *entries):
         self.table = [[] for i in range(size)]
 
-        if len(entries):
+        if entries:
             for i in range(0, len(entries), 2):
                 key = entries[i]
                 val = entries[i + 1]
