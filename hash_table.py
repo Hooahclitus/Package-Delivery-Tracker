@@ -21,12 +21,8 @@ class HashTable:
                     return
             bucket.append([key, val])
             
-    def update_item(self, key, val):
-        for entry in enumerate((bucket := self.__bucket(key))):
-            if entry[1][0] == key:
-                bucket[entry[0]] = [key, val]
-                return
-        bucket.append([key, val])
+    def update(self, key, val):
+        self.insert(key, val)
 
     def remove_item(self, key):
         for entry in (bucket := self.__bucket(key)):
