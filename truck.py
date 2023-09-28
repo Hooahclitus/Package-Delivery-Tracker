@@ -1,14 +1,15 @@
 from hash_table import *
 
-
+# todo: add distance traveled
 def create_truck(cargo=None):
     table = HashTable(6, 
-        'location', '4001 South 700 East', 
+        'hub', '4001 South 700 East',
+        'location', None, 
         'destination', None,
         'depart_time', None,
         'arrive_time', None,
-        'hub', '4001 South 700 East',
-        'cargo', cargo
+        'cargo', cargo,
+        'distance', 0
     )
     return table
     
