@@ -16,7 +16,7 @@ def create_location_data(file_path):
 
 def create_package_data(file_path):
     # Define keys for mapping package data
-    keys = ['id', 'addr', 'city', 'state', 'zip', 'deadline', 'weight', 'status', 'req_truck', 'delayed', 'truck_grp', 'wrong_addr', 'deadline']
+    keys = ['id', 'addr', 'city', 'state', 'zip', 'deadline', 'weight', 'status', 'delivery_time', 'req_truck', 'delayed', 'truck_grp', 'wrong_addr', 'deadline']
 
     # Initialize a hash table to store package data
     package_table = HashTable(40)
@@ -28,7 +28,7 @@ def create_package_data(file_path):
         # Iterate over packages, mapping package data to a hash table and adding it to the main package_table
         for package in csv_reader:
             # Create a hash table for each package, initializing with key-value pairs from keys and package data
-            tbl = HashTable(13, *[item for key, val in zip(keys, [package[i] for i in range(13)]) for item in (key, val)])
+            tbl = HashTable(13, *[item for key, val in zip(keys, [package[i] for i in range(14)]) for item in (key, val)])
             
             # Insert the constructed hash table into package_table using the package ID as the key
             package_table.insert(int(package[0]), tbl)
