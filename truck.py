@@ -1,11 +1,12 @@
 from hash_table import *
+from datetime import datetime, date, time, timedelta
 
 # todo: remove destination if not needed
-def create_truck(cargo=None):
+def create_truck(cargo=None, time=time(8, 00)):
     truck = HashTable(6, 
         'location', '4001 South 700 East', 
-        'depart_time', None,
-        'arrive_time', None,
+        'arrive_time', datetime.combine(date.today(), time),
+        'depart_time', datetime.combine(date.today(), time),
         'cargo', cargo,
         'distance', 0,
         'log', []
@@ -24,12 +25,11 @@ def log_cargo(truck, entry):
     truck.get('log').append(entry)
     return truck
 
-# todo: add delivery time to log_cargo
 def deliver_packages(truck):
     for index, package in enumerate(truck.get('cargo')):
         if package.get('addr') == truck.get('location'):
             unload_cargo(truck, index) 
-            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: Delivered")
+            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: Delivered, TIME: {truck.get('arrive_time')}")
     return truck
 
 def update_distance_traveled(truck, distance):
