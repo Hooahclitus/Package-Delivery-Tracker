@@ -19,6 +19,8 @@ def move_to_closest_destination(truck):
         (address, distance) = list(destination.items())[0]
 
         update_location(truck, address)
+        update_arrive_time(truck, distance)
+        update_depart_time(truck)
         update_distance_traveled(truck, distance)
 
         return truck
