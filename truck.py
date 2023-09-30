@@ -38,3 +38,4 @@ def update_distance_traveled(truck, distance):
 
 def update_location(truck, address):
     truck.update('location', address)
+    return truck
