@@ -1,3 +1,4 @@
+from utils import *
 from hash_table import *
 from datetime import datetime, date, time, timedelta
 
@@ -29,7 +30,7 @@ def deliver_packages(truck):
     for index, package in enumerate(truck.get('cargo')):
         if package.get('addr') == truck.get('location'):
             unload_cargo(truck, index) 
-            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: Delivered, TIME: {truck.get('arrive_time')}")
+            log_cargo(truck, f"ID: {package.get('id')}, ADDRESS: {package.get('addr')}, STATUS: Delivered, TIME: {truck.get('arrive_time').time()}")
     return truck
 
 def update_distance_traveled(truck, distance):
@@ -38,4 +39,12 @@ def update_distance_traveled(truck, distance):
 
 def update_location(truck, address):
     truck.update('location', address)
+    return truck
+
+def update_arrive_time(truck, distance):
+    truck.update('arrive_time', truck.get('depart_time') + timedelta(seconds=distance_to_seconds(distance)))
+    return truck
+
+def update_depart_time(truck):
+    truck.update('depart_time', truck.get('arrive_time'))
     return truck
