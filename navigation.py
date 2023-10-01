@@ -4,18 +4,19 @@ from csv_parser import *
 
 location_data = create_location_data('data/location_data.csv')
 
-def closest_destination(truck):
+def closest_delivery_location(truck):
     destinations_from_location = location_data.get(truck.get('location'))
-    package_destinations = [package.get('addr') for package in truck.get('cargo') if package.get('status') != 'Delivered']
+    package_destinations = [address for address, _ in truck.get('cargo').items()]
     
     valid_destinations = {dest: dist for dest, dist in destinations_from_location.items() if dest in package_destinations}
     min_address = min(valid_destinations, key=valid_destinations.get)
     
     return {min_address: valid_destinations[min_address]}
 
+# TODO remove if necessary or modify
 def move_to_closest_destination(truck):
     if truck.get('cargo'):
-        destination = closest_destination(truck)
+        destination = closest_delivery_location(truck)
         (address, distance) = list(destination.items())[0]
 
         update_location(truck, address)
