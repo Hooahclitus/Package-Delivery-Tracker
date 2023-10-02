@@ -21,12 +21,14 @@ def load_cargo(truck, cargo):
     return truck
 
 
-def unload_cargo(truck, address):
+def unload_packages(truck, packages, address):
+    log_cargo(truck, packages)
     truck.get("cargo").pop(address)
     return truck
 
 
-def dump_cargo(truck):
+def dump_cargo(truck, remaining_packages):
+    log_cargo(truck, *remaining_packages)
     truck.get("cargo").clear()
     return truck
 
@@ -63,6 +65,5 @@ def update_depart_time(truck):
 
 def deliver_packages(truck, packages, address):
     update_status(packages, f"Delivered at {truck.get('arrive_time')}")
-    log_cargo(truck, packages)
-    unload_cargo(truck, address)
+    unload_packages(truck, packages, address)
     update_depart_time(truck)
