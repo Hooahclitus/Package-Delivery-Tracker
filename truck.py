@@ -59,3 +59,10 @@ def update_arrive_time(truck, distance):
 def update_depart_time(truck):
     truck.update("depart_time", truck.get("arrive_time"))
     return truck
+
+
+def deliver_packages(truck, packages, address):
+    update_status(packages, f"Delivered at {truck.get('arrive_time')}")
+    log_cargo(truck, packages)
+    unload_cargo(truck, address)
+    update_depart_time(truck)
