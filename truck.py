@@ -53,7 +53,8 @@ def update_arrive_time(truck, distance):
     truck.update(
         "arrive_time", (
             datetime.combine(date.today(), 
-                truck.get("depart_time")) + timedelta(seconds=distance_to_seconds(distance))
+                truck.get("depart_time")) + 
+                timedelta(seconds=distance_to_seconds(distance))
             ).time())
     return truck
 
