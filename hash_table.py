@@ -20,9 +20,6 @@ class HashTable:
                     bucket[entry[0]] = [key, val]
                     break
             bucket.append([key, val])
-            
-    # def update(self, *entries):
-    #     self.insert(*entries)
 
     def dissoc(self, *keys):
         for key in keys:
