@@ -16,7 +16,7 @@ def create_location_data(file_path):
 
 def create_package_data(file_path):
     # Define keys for mapping package data
-    keys = ['id', 'addr', 'city', 'state', 'zip', 'deadline', 'weight', 'status', 'delivery_time', 'req_truck', 'delayed', 'truck_grp', 'wrong_addr', 'deadline']
+    keys = ['id', 'addr', 'city', 'state', 'zip', 'deadline', 'weight', 'status', 'delivery_time', 'req_truck', 'delayed', 'truck_grp', 'wrong_addr', 'has_deadline']
 
     # Initialize a hash table to store package data
     package_table = HashTable(40)
