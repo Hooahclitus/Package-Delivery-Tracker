@@ -6,12 +6,12 @@ class HashTable:
             for i in range(0, len(entries), 2):
                 key = entries[i]
                 val = entries[i + 1]
-                self.insert(key, val)
+                self.assoc(key, val)
 
     def __bucket(self, key):
         return self.table[hash(key) % len(self.table)]
 
-    def insert(self, *entries):
+    def assoc(self, *entries):
         for i in range(0, len(entries), 2):
             key = entries[i]
             val = entries[i + 1]
@@ -21,8 +21,8 @@ class HashTable:
                     break
             bucket.append([key, val])
             
-    def update(self, *entries):
-        self.insert(*entries)
+    # def update(self, *entries):
+    #     self.insert(*entries)
 
     def remove(self, *keys):
         for key in keys:

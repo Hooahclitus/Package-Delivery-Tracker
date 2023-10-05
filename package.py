@@ -1,19 +1,18 @@
-def group_by_address(truck):
+def group_by_address(packages):
     grouped = {}
-    for package in truck.get('cargo'):
+    for package in packages:
         address = package.get('addr')
         if address in grouped:
             grouped[address].append(package)
         else:
             grouped[address] = [package]
     
-    truck.update('cargo', grouped)
-    return truck
+    return grouped
 
 def update_package_status(packages, status):
     for package in packages:
-        package.update('status', status)
+        package.assoc('status', status)
 
 def update_package_time(packages, time):
     for package in packages:
-        package.update('time, str(time)')
+        package.assoc('time, str(time)')

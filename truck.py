@@ -9,7 +9,7 @@ def create_truck(cargo=None):
         "location", "4001 South 700 East",
         "depart_time", None,
         "arrive_time", None,
-        "cargo", cargo,
+        "cargo", group_by_address(cargo),
         "distance", 0,
         "log", [],
     )
@@ -17,7 +17,7 @@ def create_truck(cargo=None):
 
 
 def load_cargo(truck, cargo):
-    truck.insert("cargo", cargo)
+    truck.assoc("cargo", cargo)
     return truck
 
 
@@ -35,22 +35,22 @@ def dump_cargo(truck, remaining_packages):
 
 def log_cargo(truck, *packages):
     for package in packages:
-        truck.update("log", truck.get("log") + package)
+        truck.assoc("log", truck.get("log") + package)
     return truck
 
 
 def update_distance_traveled(truck, distance):
-    truck.update("distance", truck.get("distance") + distance)
+    truck.assoc("distance", truck.get("distance") + distance)
     return truck
 
 
 def update_location(truck, address):
-    truck.update("location", address)
+    truck.assoc("location", address)
     return truck
 
 
 def update_arrive_time(truck, distance):
-    truck.update(
+    truck.assoc(
         "arrive_time", (
             datetime.combine(date.today(), 
                 truck.get("depart_time")) + 
@@ -60,5 +60,5 @@ def update_arrive_time(truck, distance):
 
 
 def update_depart_time(truck):
-    truck.update("depart_time", truck.get("arrive_time"))
+    truck.assoc("depart_time", truck.get("arrive_time"))
     return truck
