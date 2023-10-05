@@ -24,7 +24,7 @@ class HashTable:
     # def update(self, *entries):
     #     self.insert(*entries)
 
-    def remove(self, *keys):
+    def dissoc(self, *keys):
         for key in keys:
             for entry in (bucket := self.__bucket(key)):
                 if entry[0] == key:
