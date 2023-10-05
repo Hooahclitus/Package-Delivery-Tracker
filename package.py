@@ -10,6 +10,10 @@ def group_by_address(truck):
     truck.update('cargo', grouped)
     return truck
 
-def update_status(packages, status):
+def update_package_status(packages, status):
     for package in packages:
         package.update('status', status)
+
+def update_package_time(packages, time):
+    for package in packages:
+        package.update('time, str(time)')
