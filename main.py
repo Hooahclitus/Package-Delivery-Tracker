@@ -8,8 +8,6 @@ package_data = create_package_data('data/package_data.csv')
 
 tk_1 = package_data.get(*range(1, 17))
 truck_1 = create_truck(tk_1)
-# truck_1.get('cargo')
-# del truck_1.get('cargo')['4300 S 1300 E']
 
 # tk_2 = package_data.get(*range(17, 33))
 # truck_2 = create_truck(tk_2)
