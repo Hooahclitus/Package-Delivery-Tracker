@@ -4,11 +4,11 @@ from hash_table import *
 from datetime import datetime, date, time, timedelta
 
 
-def create_truck(cargo=None, time=time(8, 00)):
+def create_truck(cargo=None):
     truck = HashTable(6,
         "location", "4001 South 700 East",
-        "arrive_time", time,
-        "depart_time", time,
+        "depart_time", None,
+        "arrive_time", None,
         "cargo", cargo,
         "distance", 0,
         "log", [],
