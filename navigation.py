@@ -16,7 +16,8 @@ def closest_delivery_location(truck):
 def return_to_hub(truck):
     address = '4001 South 700 East'
     distance = location_data.get(truck.get('location')).get(address)
-
+    
+    update_arrive_time(truck, distance)
     update_location(truck, address)
     update_distance_traveled(truck, distance)
 
