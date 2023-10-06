@@ -17,7 +17,7 @@ def create_truck(cargo=None, depart_time=None, arrive_time=None):
 
 
 def load_cargo(truck, cargo):
-    truck.assoc("cargo", cargo)
+    truck.assoc("cargo", group_by_address(cargo))
     return truck
 
 
