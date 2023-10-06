@@ -34,18 +34,16 @@ def main():
     truck_2_packages = package_data.get(*[3, 5, 13, 14, 15, 16, 18, 19, 20, 21, 34, 36, 37, 38, 39])
     truck_3_packages = package_data.get(*[2, 8, 9, 10, 11, 12, 17, 22, 23, 24, 27, 33, 35])
 
-    truck_1 = create_truck(truck_1_packages, depart_time=time(9, 5))
-    truck_2 = create_truck(truck_2_packages, depart_time=time(8))
-
-    process_deliveries(truck_1)
-    process_deliveries(truck_2)
-
     for package in truck_3_packages:
         if package.get('id') == '9':
             package.assoc('address', '410 S State St')
-    
+
+    truck_1 = create_truck(truck_1_packages, depart_time=time(9, 5))
+    truck_2 = create_truck(truck_2_packages, depart_time=time(8))
     truck_3 = create_truck(truck_3_packages, depart_time=time(10,20))
 
+    process_deliveries(truck_1)
+    process_deliveries(truck_2)
     process_deliveries(truck_3)
 
     for package in truck_1.get('log'):
