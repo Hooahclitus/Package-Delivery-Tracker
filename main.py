@@ -4,9 +4,7 @@ from csv_parser import *
 from datetime import time
 
 
-def process_deliveries(truck, start_time=time(8), end_time=None):
-    truck.assoc('depart_time', start_time)
-
+def process_deliveries(truck, end_time=None):
     while truck.get('cargo'):
         (address, distance) = next(iter(closest_delivery_location(truck).items()))
         update_arrive_time(truck, distance)
@@ -36,20 +34,19 @@ def main():
     truck_2_packages = package_data.get(*[3, 5, 13, 14, 15, 16, 18, 19, 20, 21, 34, 36, 37, 38, 39])
     truck_3_packages = package_data.get(*[2, 8, 9, 10, 11, 12, 17, 22, 23, 24, 27, 33, 35])
 
-    truck_1 = create_truck(tk_1)
-    truck_2 = create_truck(tk_2)
+    truck_1 = create_truck(truck_1_packages, depart_time=time(9, 5))
+    truck_2 = create_truck(truck_2_packages, depart_time=time(8))
 
+    process_deliveries(truck_1)
     process_deliveries(truck_2)
-    process_deliveries(truck_1, start_time=time(9, 5))
 
-    updated_address = '410 S State St'
-    for package in tk_3:
+    for package in truck_3_packages:
         if package.get('id') == '9':
-            package.assoc('address', updated_address)
+            package.assoc('address', '410 S State St')
     
-    truck_3 = create_truck(tk_3)
+    truck_3 = create_truck(truck_3_packages, depart_time=time(10,20))
 
-    process_deliveries(truck_3, start_time=time(10,20))
+    process_deliveries(truck_3)
 
     for package in truck_1.get('log'):
         print(f"ID: {package.get('id'):4} ADDRESS: {package.get('address')[:30]:30} STATUS: {package.get('status'):12} TIME: {package.get('delivery_time'):10} DEADLINE: {package.get('has_deadline'):4}")
