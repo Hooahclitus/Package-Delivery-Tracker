@@ -19,7 +19,8 @@ class HashTable:
                 if entry[1][0] == key:
                     bucket[entry[0]] = [key, val]
                     break
-            bucket.append([key, val])
+            else:
+                bucket.append([key, val])
 
     def dissoc(self, *keys):
         for key in keys:
