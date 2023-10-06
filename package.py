@@ -1,5 +1,9 @@
 def group_by_address(packages):
     grouped = {}
+
+    if not isinstance(packages, list):
+        packages = [packages] 
+
     for package in packages:
         address = package.get('address')
         if address in grouped:
