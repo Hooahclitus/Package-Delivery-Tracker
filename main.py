@@ -4,9 +4,9 @@ from csv_parser import *
 from datetime import time
 
 
-def process_deliveries(truck, end_time=None):
+def process_deliveries(truck, end_time):
     while truck.get('cargo'):
-        (address, distance) = next(iter(closest_delivery_location(truck).items()))
+        address, distance = next(iter(closest_delivery_location(truck).items()))
         update_arrive_time(truck, distance)
 
         match end_time:
@@ -18,16 +18,15 @@ def process_deliveries(truck, end_time=None):
             case arrive if end_time == truck.get('arrive_time'):
                 handle_arrive(truck, address, distance)
                 return truck
-            case depart if end_time == truck.get('depart_time'):
+            case depart if end_time <= truck.get('depart_time'):
                 handle_depart(truck)
                 return truck
             case _:
                 deliver_packages(truck, address, distance, 'Delivered')
-
     return_to_hub(truck)
     return truck
 
-def main():
+def initialize_and_process_trucks(end_time):
     package_data = create_package_data('data/package_data.csv')
 
     truck_1_packages = package_data.get(*[1, 4, 6, 7, 25, 26, 28, 29, 30, 31, 32, 40])
@@ -42,9 +41,13 @@ def main():
     truck_2 = create_truck(truck_2_packages, depart_time=time(8))
     truck_3 = create_truck(truck_3_packages, depart_time=time(10,20))
 
-    process_deliveries(truck_1)
-    process_deliveries(truck_2)
-    process_deliveries(truck_3)
+    for truck in [truck_1, truck_2, truck_3]:
+        process_deliveries(truck, end_time)
+
+    return truck_1, truck_2, truck_3
+
+def main(end_time=None):
+    truck_1, truck_2, truck_3 = initialize_and_process_trucks(end_time)
 
     for package in truck_1.get('log'):
         print(f"ID: {package.get('id'):4} ADDRESS: {package.get('address')[:30]:30} STATUS: {package.get('status'):12} TIME: {package.get('delivery_time'):10} DEADLINE: {package.get('has_deadline'):4}")
@@ -60,4 +63,4 @@ def main():
 
     print(f"COMBINED DISTANCE TRAVELED: {round(sum([truck.get('distance') for truck in [truck_1, truck_2, truck_3]]), 2)}")
 
-main()
+main(time(9,35))
