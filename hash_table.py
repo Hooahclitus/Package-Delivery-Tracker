@@ -1,6 +1,6 @@
 class HashTable:
     def __init__(self, size=40, *entries):
-        self.table = [[] for i in range(size)]
+        self.table = [[] for _ in range(size)]
 
         if entries:
             for i in range(0, len(entries), 2):
@@ -26,18 +26,14 @@ class HashTable:
         for key in keys:
             for entry in (bucket := self.__bucket(key)):
                 if entry[0] == key:
-                    bucket.remove(entry) 
+                    bucket.remove(entry)
 
-    def get(self, *keys, entry=False):
-        get_value = ((lambda key: next(([k, v] for k, v in self.__bucket(key) if k == key), None)) 
-                     if entry == True 
-                     else (lambda key: next((v for k, v in self.__bucket(key) if k == key), None)))
-
+    def get(self, *keys):
         match keys:
             case [key]:
-                return get_value(key)
+                return next((v for k, v in self.__bucket(key) if k == key), None)
             case [*keys]:
-                return [get_value(key) for key in keys] 
+                return [next((v for k, v in self.__bucket(key) if k == key), None) for key in keys]
 
     def size(self):
         return len([package for package in self.table])
@@ -68,7 +64,7 @@ class HashTable:
             for key, value in bucket:
                 all_items.append((key, value))
         return all_items
-    
+
     def keys(self):
         all_keys = []
         for bucket in self.table:

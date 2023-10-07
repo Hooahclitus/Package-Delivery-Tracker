@@ -1,9 +1,0 @@
-.DS_Store
-.vscode/settings.json
-__pycache__/csv_handler.cpython-311.pyc
-__pycache__/data_handler.cpython-311.pyc
-__pycache__/hash_table.cpython-311.pyc
-__pycache__/load_truck.cpython-311.pyc
-__pycache__/package_handler.cpython-311.pyc
-__pycache__/package.cpython-311.pyc
-__pycache__/csv_parser.cpython-311.pyc

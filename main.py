@@ -1,7 +1,13 @@
-from truck import *
-from navigation import *
-from csv_parser import *
 from datetime import time
+
+from navigation import *
+
+
+def lookup_package_by_id(target_id, trucks):
+    for truck in trucks:
+        for package in truck.get('log'):
+            if package.get('id') == target_id:
+                print(package)
 
 
 def process_deliveries(truck, end_time):
@@ -12,13 +18,13 @@ def process_deliveries(truck, end_time):
         match end_time:
             case None:
                 deliver_packages(truck, address, distance, 'Delivered')
-            case enroute if end_time > truck.get('depart_time') and end_time < truck.get('arrive_time'):
+            case _ if truck.get('depart_time') < end_time < truck.get('arrive_time'):
                 handle_enroute(truck, address, end_time)
                 return truck
-            case arrive if end_time == truck.get('arrive_time'):
+            case _ if end_time == truck.get('arrive_time'):
                 handle_arrive(truck, address, distance)
                 return truck
-            case depart if end_time <= truck.get('depart_time'):
+            case _ if end_time <= truck.get('depart_time'):
                 handle_depart(truck)
                 return truck
             case _:
@@ -26,6 +32,7 @@ def process_deliveries(truck, end_time):
     return_to_hub(truck)
 
     return truck
+
 
 def initialize_and_process_trucks(end_time):
     package_data = create_package_data('data/package_data.csv')
@@ -39,30 +46,58 @@ def initialize_and_process_trucks(end_time):
             package.assoc('address', '410 S State St')
 
     cargo_list = [cargo_1, cargo_2, cargo_3]
-    truck_times = [time(9, 5), time(8), time(10,20)]
+    truck_times = [time(9, 5), time(8), time(10, 20)]
 
     truck_1, truck_2, truck_3 = [
-        process_deliveries(create_truck(cargo, depart_time=time), end_time)
-        for cargo, time in zip(cargo_list, truck_times)
+        process_deliveries(create_truck(cargo, depart_time=depart_time), end_time)
+        for cargo, depart_time in zip(cargo_list, truck_times)
     ]
 
     return truck_1, truck_2, truck_3
 
-def main(end_time=None):
+
+def main(target_id=None, end_time=None):
     truck_1, truck_2, truck_3 = initialize_and_process_trucks(end_time)
 
+    if target_id:
+        lookup_package_by_id(target_id, [truck_1, truck_2, truck_3])
+
     for package in truck_1.get('log'):
-        print(f"ID: {package.get('id'):4} ADDRESS: {package.get('address')[:30]:30} STATUS: {package.get('status'):12} TIME: {package.get('delivery_time'):10} DEADLINE: {package.get('has_deadline'):4}")
-    print(f"Truck 1 ARRIVED AT HUB: {truck_1.get('arrive_time')} Distance Traveled: {round(truck_1.get('distance'), 2):<10}")
+        print(
+            f"ID: {package.get('id'):4} "
+            f"ADDRESS: {package.get('address')[:30]:30} "
+            f"STATUS: {package.get('status'):12} "
+            f"TIME: {package.get('delivery_time'):10} "
+            f"DEADLINE: {package.get('has_deadline'):4}")
+    print(
+        f"Truck 1 ARRIVED AT HUB: {truck_1.get('arrive_time')} "
+        f"Distance Traveled: {round(truck_1.get('distance'), 2):<10}")
 
     for package in truck_2.get('log'):
-        print(f"ID: {package.get('id'):4} ADDRESS: {package.get('address')[:30]:30} STATUS: {package.get('status'):12} TIME: {package.get('delivery_time'):10} DEADLINE: {package.get('has_deadline'):4}")
-    print(f"Truck 2 ARRIVED AT HUB: {truck_2.get('arrive_time')} Distance Traveled: {round(truck_2.get('distance'), 2):<10}")
+        print(
+            f"ID: {package.get('id'):4} "
+            f"ADDRESS: {package.get('address')[:30]:30} "
+            f"STATUS: {package.get('status'):12} "
+            f"TIME: {package.get('delivery_time'):10} "
+            f"DEADLINE: {package.get('has_deadline'):4}")
+    print(
+        f"Truck 2 ARRIVED AT HUB: {truck_2.get('arrive_time')} "
+        f"Distance Traveled: {round(truck_2.get('distance'), 2):<10}")
 
     for package in truck_3.get('log'):
-        print(f"ID: {package.get('id'):4} ADDRESS: {package.get('address')[:30]:30} STATUS: {package.get('status'):12} TIME: {package.get('delivery_time'):10} DEADLINE: {package.get('has_deadline'):4}")
-    print(f"Truck 3 ARRIVED AT HUB: {truck_3.get('arrive_time')} Distance Traveled: {round(truck_3.get('distance'), 2):<10}")
+        print(
+            f"ID: {package.get('id'):4} "
+            f"ADDRESS: {package.get('address')[:30]:30} "
+            f"STATUS: {package.get('status'):12} "
+            f"TIME: {package.get('delivery_time'):10} "
+            f"DEADLINE: {package.get('has_deadline'):4}")
+    print(
+        f"Truck 3 ARRIVED AT HUB: {truck_3.get('arrive_time')} "
+        f"Distance Traveled: {round(truck_3.get('distance'), 2):<10}")
 
-    print(f"COMBINED DISTANCE TRAVELED: {round(sum([truck.get('distance') for truck in [truck_1, truck_2, truck_3]]), 2)}")
+    print(
+        f"COMBINED DISTANCE TRAVELED: "
+        f"{round(sum([truck.get('distance') for truck in [truck_1, truck_2, truck_3]]), 2)}")
+
 
 main()

@@ -1,18 +1,19 @@
-from utils import *
-from package import *
+from datetime import datetime, date, timedelta
+
 from hash_table import *
-from datetime import datetime, date, time, timedelta
+from package import *
+from utils import *
 
 
 def create_truck(cargo=None, depart_time=None, arrive_time=None):
     truck = HashTable(6,
-        "location", "4001 South 700 East",
-        "depart_time", depart_time,
-        "arrive_time", arrive_time,
-        "cargo", group_by_address(cargo),
-        "distance", 0,
-        "log", [],
-    )
+                      "location", "4001 South 700 East",
+                      "depart_time", depart_time,
+                      "arrive_time", arrive_time,
+                      "cargo", group_by_address(cargo),
+                      "distance", 0,
+                      "log", [],
+                      )
     return truck
 
 
@@ -50,10 +51,10 @@ def update_location(truck, address):
 def update_arrive_time(truck, distance):
     truck.assoc(
         "arrive_time", (
-            datetime.combine(date.today(), 
-                truck.get("depart_time")) + 
+                datetime.combine(date.today(),
+                                 truck.get("depart_time")) +
                 timedelta(seconds=distance_to_seconds(distance))
-            ).time())
+        ).time())
     return truck
 
 
@@ -74,6 +75,7 @@ def deliver_packages(truck, address, distance, status):
     update_depart_time(truck)
     return truck
 
+
 def handle_enroute(truck, address, end_time):
     packages = truck.get('cargo').get(address)
     remaining_packages = truck.get('cargo').values()
@@ -92,6 +94,7 @@ def handle_enroute(truck, address, end_time):
     dump_cargo(truck, remaining_packages)
     return truck
 
+
 def handle_arrive(truck, address, distance):
     packages = truck.get('cargo').get(address)
     remaining_packages = truck.get('cargo').values()
@@ -103,6 +106,7 @@ def handle_arrive(truck, address, distance):
     log_cargo(truck, *remaining_packages)
     dump_cargo(truck, remaining_packages)
     return truck
+
 
 def handle_depart(truck):
     remaining_packages = truck.get('cargo').values()
