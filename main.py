@@ -3,11 +3,24 @@ from datetime import time
 from navigation import *
 
 
+def print_output_data(truck):
+    for package in truck.get('log'):
+        print(
+            f"ID: {package.get('id'):4} "
+            f"ADDRESS: {package.get('address')[:30]:30} "
+            f"STATUS: {package.get('status'):12} "
+            f"TIME: {str(package.get('delivery_time')):10} "
+            f"DEADLINE: {package.get('has_deadline'):4}")
+    print(
+        f"Truck 1 ARRIVED AT HUB: {truck.get('arrive_time')} "
+        f"Distance Traveled: {round(truck.get('distance'), 2):<10}")
+
+
 def lookup_package_by_id(target_id, trucks):
     for truck in trucks:
         for package in truck.get('log'):
-            if package.get('id') == target_id:
-                print(package)
+            if (package_id := package.get('id')) == target_id:
+                print(package_id)
 
 
 def process_deliveries(truck, end_time):
@@ -56,48 +69,22 @@ def initialize_and_process_trucks(end_time):
     return truck_1, truck_2, truck_3
 
 
-def main(target_id=None, end_time=None):
+def main(target_id=None, start_time=None, end_time=None):
     truck_1, truck_2, truck_3 = initialize_and_process_trucks(end_time)
+    trucks = [truck_1, truck_2, truck_3]
 
     if target_id:
-        lookup_package_by_id(target_id, [truck_1, truck_2, truck_3])
+        lookup_package_by_id(target_id, trucks)
 
-    for package in truck_1.get('log'):
-        print(
-            f"ID: {package.get('id'):4} "
-            f"ADDRESS: {package.get('address')[:30]:30} "
-            f"STATUS: {package.get('status'):12} "
-            f"TIME: {package.get('delivery_time'):10} "
-            f"DEADLINE: {package.get('has_deadline'):4}")
-    print(
-        f"Truck 1 ARRIVED AT HUB: {truck_1.get('arrive_time')} "
-        f"Distance Traveled: {round(truck_1.get('distance'), 2):<10}")
+    for truck in trucks:
+        print_output_data(truck)
 
-    for package in truck_2.get('log'):
-        print(
-            f"ID: {package.get('id'):4} "
-            f"ADDRESS: {package.get('address')[:30]:30} "
-            f"STATUS: {package.get('status'):12} "
-            f"TIME: {package.get('delivery_time'):10} "
-            f"DEADLINE: {package.get('has_deadline'):4}")
-    print(
-        f"Truck 2 ARRIVED AT HUB: {truck_2.get('arrive_time')} "
-        f"Distance Traveled: {round(truck_2.get('distance'), 2):<10}")
+    filtered_log = [package.get('id') for package in truck_2.get('log') if
+                    package.get('delivery_time') != 'N/A' and start_time <= package.get('delivery_time') <= end_time]
 
-    for package in truck_3.get('log'):
-        print(
-            f"ID: {package.get('id'):4} "
-            f"ADDRESS: {package.get('address')[:30]:30} "
-            f"STATUS: {package.get('status'):12} "
-            f"TIME: {package.get('delivery_time'):10} "
-            f"DEADLINE: {package.get('has_deadline'):4}")
-    print(
-        f"Truck 3 ARRIVED AT HUB: {truck_3.get('arrive_time')} "
-        f"Distance Traveled: {round(truck_3.get('distance'), 2):<10}")
+    print(filtered_log)
 
-    print(
-        f"COMBINED DISTANCE TRAVELED: "
-        f"{round(sum([truck.get('distance') for truck in [truck_1, truck_2, truck_3]]), 2)}")
+    print(f"COMBINED DISTANCE TRAVELED: {round(sum([truck.get('distance') for truck in trucks]), 2)}")
 
 
-main()
+main(target_id=20, start_time=time(8, 25), end_time=time(9, 25))
