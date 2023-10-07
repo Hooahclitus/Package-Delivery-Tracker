@@ -10,15 +10,16 @@ def create_truck(cargo=None, depart_time=None, arrive_time=None):
                       "location", "4001 South 700 East",
                       "depart_time", depart_time,
                       "arrive_time", arrive_time,
-                      "cargo", group_by_address(cargo),
+                      "cargo", cargo,
                       "distance", 0,
                       "log", [],
+                      "depart", False
                       )
     return truck
 
 
 def load_cargo(truck, cargo):
-    truck.assoc("cargo", group_by_address(cargo))
+    truck.assoc("cargo", cargo)
     return truck
 
 
@@ -27,7 +28,7 @@ def unload_packages(truck, address):
     return truck
 
 
-def dump_cargo(truck, remaining_packages):
+def dump_cargo(truck):
     truck.get("cargo").clear()
     return truck
 
@@ -91,7 +92,7 @@ def handle_enroute(truck, address, end_time):
     log_cargo(truck, packages)
     unload_packages(truck, address)
     log_cargo(truck, *remaining_packages)
-    dump_cargo(truck, remaining_packages)
+    dump_cargo(truck)
     return truck
 
 
@@ -104,7 +105,7 @@ def handle_arrive(truck, address, distance):
     log_cargo(truck, packages)
     unload_packages(truck, address)
     log_cargo(truck, *remaining_packages)
-    dump_cargo(truck, remaining_packages)
+    dump_cargo(truck)
     return truck
 
 
@@ -112,5 +113,5 @@ def handle_depart(truck):
     remaining_packages = truck.get('cargo').values()
 
     log_cargo(truck, *remaining_packages)
-    dump_cargo(truck, remaining_packages)
+    dump_cargo(truck)
     return truck
