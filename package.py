@@ -17,4 +17,4 @@ def group_by_address(packages):
 def update_status_and_time(packages, status, time):
     for package in packages:
         package.assoc('status', status)
-        package.assoc('delivery_time', str(time))
+        package.assoc('delivery_time', time)
