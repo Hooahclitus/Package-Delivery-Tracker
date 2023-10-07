@@ -33,7 +33,7 @@ def create_package_data(file_path):
         for package in csv_reader:
             # Create a hash table for each package, initializing with key-value pairs from keys and package data
             tbl = HashTable(13,
-                            *[item for key, val in zip(keys, [package[i] for i in range(12)] + ['Undelivered', 'N/A'])
+                            *[item for key, val in zip(keys, [package[i] for i in range(12)] + ['At Hub', 'N/A'])
                               for item in (key, val)])
 
             # Casts ID value from hash table to int and associates with key 'id'
