@@ -1,5 +1,3 @@
-from datetime import datetime, date, timedelta
-
 from hash_table import *
 from package import *
 from utils import *
@@ -10,7 +8,7 @@ def create_truck(cargo=None, depart_time=None, arrive_time=None):
                       "location", "4001 South 700 East",
                       "depart_time", depart_time,
                       "arrive_time", arrive_time,
-                      "cargo", cargo,
+                      "cargo", group_by_address(cargo),
                       "distance", 0,
                       "log", [],
                       "depart", False
