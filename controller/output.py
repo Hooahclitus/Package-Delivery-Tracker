@@ -18,3 +18,10 @@ def print_distance_traveled(trucks):
         f"COMBINED DISTANCE TRAVELED: "
         f"{round(sum([truck.get('distance') for truck in trucks]), 2)}"
     )
+
+
+def lookup_package_by_id(target_id, trucks):
+    for truck in trucks:
+        for package in truck.get('log'):
+            if (package_id := package.get('id')) == target_id:
+                print(package_id)

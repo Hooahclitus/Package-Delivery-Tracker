@@ -1,6 +1,8 @@
-from hash_table import *
-from package import *
-from utils import *
+from datetime import datetime, timedelta, date
+
+from model.hash_table import HashTable
+from model.package import group_by_address, update_status_and_time
+from model.utils import distance_to_seconds, seconds_to_distance, difference_of_times
 
 
 def create_truck(cargo=None, depart_time=None, arrive_time=None):

@@ -1,5 +1,5 @@
-from csv_parser import *
-from truck import *
+from model.csv_parser import create_location_data
+from model.truck import update_arrive_time, update_location, update_distance_traveled
 
 location_data = create_location_data('data/location_data.csv')
 

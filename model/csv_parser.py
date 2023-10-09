@@ -1,6 +1,6 @@
 import csv
 
-from hash_table import HashTable
+from model.hash_table import HashTable
 
 
 def create_location_data(file_path):
