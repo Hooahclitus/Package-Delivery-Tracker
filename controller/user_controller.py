@@ -5,6 +5,7 @@ from view.delivery_view import *
 from view.user_view import *
 
 
+# Parse user time input into a valid time format
 def parse_time(time_name):
     formats = ["%I:%M%p", "%I%p", "%H:%M", "%H:%M%p"]
 
@@ -21,6 +22,7 @@ def parse_time(time_name):
         show_invalid_time()
 
 
+# Lookup package by ID, handle invalid inputs
 def parse_lookup_by_id(trucks):
     while True:
         user_input = ask_for_package_id()
@@ -35,12 +37,15 @@ def parse_lookup_by_id(trucks):
             show_invalid_package_id()
 
 
+# Main menu and user interaction loop
 def main_interface():
     display_main_menu()
 
     while True:
+        # Handle user selections
         user_input = ask_for_selection()
 
+        # Process trucks based on custom time range
         if user_input == '1':
             start_time = parse_time("start")
             end_time = parse_time("end")
@@ -63,19 +68,22 @@ def main_interface():
 
             output_travel_data(trucks)
             main_interface()
+        # Process trucks and output data
         elif user_input == '2':
             trucks = initialize_and_process_trucks()
 
             output_travel_data(trucks)
             main_interface()
+        # Package lookup
         elif user_input == '3':
             trucks = initialize_and_process_trucks()
 
             parse_lookup_by_id(trucks)
             main_interface()
+        # Quit program
         elif user_input == 'q':
             show_quit_message()
             sys.exit()
-
+        # Invalid input handling
         else:
             show_invalid_input()

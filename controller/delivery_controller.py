@@ -3,9 +3,11 @@ from itertools import chain
 from controller.truck_controller import *
 from utilities.data_processing import *
 
+# Initialize location data for use in other functions
 location_data = create_location_data('data/location_data.csv')
 
 
+# Identify the closest destination for a truck based on its current cargo
 def closest_delivery_location(truck):
     destinations_data = location_data.get(truck.get('location'))
     destinations = [address for address in truck.get('cargo').keys()]
@@ -15,7 +17,8 @@ def closest_delivery_location(truck):
     return address, distance
 
 
-def return_to_hub(truck):
+# Update truck information when it returns to the hub
+def process_to_hub(truck):
     address = '4001 South 700 East'
     distance = location_data.get(truck.get('location')).get(address)
 
@@ -26,6 +29,7 @@ def return_to_hub(truck):
     return truck
 
 
+# Update truck and package information after completing a delivery
 def process_delivery(truck, address, distance, status):
     packages = truck.get('cargo').get(address)
 
@@ -39,14 +43,17 @@ def process_delivery(truck, address, distance, status):
     return truck
 
 
+# # Moves remaining cargo to log and clears the trucks cargo
 def process_enroute(truck):
-    flattened_cargo = list(chain(*truck.get('cargo').values()))
-    sorted_cargo = sorted(flattened_cargo, key=lambda kv: kv.get('id'))
-    truck.assoc('log', truck.get('log') + sorted_cargo)
-    truck.get('cargo').clear()
+    remaining_packages = truck.get('cargo').values()
+
+    log_cargo(truck, *remaining_packages)
+    dump_cargo(truck)
     return truck
 
 
+# Updates truck information, moves cargo delivered at location to log
+# Clears the trucks cargo
 def process_arrive(truck, address, distance):
     packages = truck.get('cargo').get(address)
     remaining_packages = truck.get('cargo').values()
@@ -60,6 +67,7 @@ def process_arrive(truck, address, distance):
     return truck
 
 
+# Moves remaining cargo to log and clears the trucks cargo
 def process_depart(truck):
     remaining_packages = truck.get('cargo').values()
 
