@@ -20,7 +20,7 @@ def create_location_data(file_path):
 def create_package_data(file_path):
     # Define keys for mapping package data
     keys = ['id', 'address', 'city', 'state', 'zip', 'deadline', 'weight', 'req_truck', 'delayed', 'truck_grp',
-            'wrong_addr', 'has_deadline', 'status', 'delivery_time']
+            'wrong_address', 'has_deadline', 'status', 'delivery_time']
 
     # Initialize a hash table to store package data
     package_table = HashTable(40)
@@ -43,3 +43,27 @@ def create_package_data(file_path):
             package_table.assoc(int(package[0]), tbl)
 
     return package_table
+
+
+def group_by_address(packages):
+    grouped = HashTable()
+
+    if not isinstance(packages, list):
+        packages = [packages]
+
+    for package in packages:
+        address = package.get('address')
+        existing_packages = grouped.get(address)
+        if existing_packages:
+            existing_packages.append(package)
+            grouped.assoc(address, existing_packages)
+        else:
+            grouped.assoc(address, [package])
+
+    return grouped
+
+
+def update_status_and_time(packages, status, time):
+    for package in packages:
+        package.assoc('status', status)
+        package.assoc('delivery_time', time)

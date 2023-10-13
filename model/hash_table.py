@@ -35,6 +35,9 @@ class HashTable:
             case [*keys]:
                 return [next((v for k, v in self.__bucket(key) if k == key), None) for key in keys]
 
+    def clear(self):
+        self.table.clear()
+
     def size(self):
         return len([package for package in self.table])
 
