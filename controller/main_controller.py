@@ -10,21 +10,23 @@ def initialize_and_process_trucks(end_time=None):
     # Load package data from CSV file
     package_data = create_package_data()
 
-    # Create cargo lists for each truck
-    cargo_1 = package_data.get(*[1, 4, 6, 7, 25, 26, 28, 29, 30, 31, 32, 40])
-    cargo_2 = package_data.get(
-        *[3, 5, 13, 14, 15, 16, 18, 19, 20, 21, 34, 36, 37, 38, 39]
-    )
-    cargo_3 = package_data.get(*[2, 8, 9, 10, 11, 12, 17, 22, 23, 24, 27, 33, 35])
+    assigned_cargo = [
+        [1, 4, 6, 7, 25, 26, 28, 29, 30, 31, 32, 40],
+        [3, 5, 13, 14, 15, 16, 18, 19, 20, 21, 34, 36, 37, 38, 39],
+        [2, 8, 9, 10, 11, 12, 17, 22, 23, 24, 27, 33, 35],
+    ]
 
-    cargo_list = [cargo_1, cargo_2, cargo_3]
+    cargo_list = [package_data.get(*cargo) for cargo in assigned_cargo]
     depart_hub_times = [time(9, 5), time(8), time(10, 20)]
 
-    # Process routes for each truck
-    truck_1, truck_2, truck_3 = [
-        process_route(create_truck(cargo, depart_time, truck_id), end_time)
+    # Creates each truck
+    trucks = [
+        create_truck(cargo, depart_time, truck_id)
         for cargo, depart_time, truck_id in zip(cargo_list, depart_hub_times, [1, 2, 3])
     ]
+
+    # Process routes for each truck
+    truck_1, truck_2, truck_3 = [process_route(truck, end_time) for truck in trucks]
 
     return [truck_1, truck_2, truck_3]
 
