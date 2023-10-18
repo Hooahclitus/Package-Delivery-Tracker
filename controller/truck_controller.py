@@ -4,16 +4,25 @@ from utilities.time_conversion import *
 
 # Initialize truck with given parameters
 def create_truck(cargo, depart_hub, truck_id=None):
-    truck = HashTable(8,
-                      "id", truck_id,
-                      "location", "4001 South 700 East",
-                      "depart_hub", depart_hub,
-                      "depart_time", depart_hub,
-                      "arrive_time", depart_hub,
-                      "cargo", group_by_address(cargo),
-                      "distance", 0,
-                      "log", [],
-                      )
+    truck = HashTable(
+        8,
+        "id",
+        truck_id,
+        "location",
+        "4001 South 700 East",
+        "depart_hub",
+        depart_hub,
+        "depart_time",
+        depart_hub,
+        "arrive_time",
+        depart_hub,
+        "cargo",
+        group_by_address(cargo),
+        "distance",
+        0,
+        "log",
+        [],
+    )
     return truck
 
 
@@ -25,13 +34,13 @@ def load_cargo(truck, cargo):
 
 # Unload packages at given address
 def unload_packages(truck, address):
-    truck.get('cargo').dissoc(address)
+    truck.get("cargo").dissoc(address)
     return truck
 
 
 # Clear all cargo from truck
 def dump_cargo(truck):
-    truck.get('cargo').clear()
+    truck.get("cargo").clear()
     return truck
 
 
@@ -60,7 +69,7 @@ def update_arrive_time(truck, distance):
     arrival_timedelta = timedelta(seconds=distance_to_seconds(distance))
     expected_arrival_time = (depart_time + arrival_timedelta).time()
 
-    truck.assoc('arrive_time', expected_arrival_time)
+    truck.assoc("arrive_time", expected_arrival_time)
     return truck
 
 

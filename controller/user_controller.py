@@ -11,12 +11,14 @@ def parse_time(time_name):
 
     while True:
         user_input = ask_for_time(time_name)
-        if user_input == 'q':
+        if user_input == "q":
             show_quit_message()
             sys.exit()
         for fmt in formats:
             try:
-                return datetime.strptime(user_input.replace(" ", "").upper(), fmt).time()
+                return datetime.strptime(
+                    user_input.replace(" ", "").upper(), fmt
+                ).time()
             except ValueError:
                 continue
         show_invalid_time()
@@ -26,7 +28,7 @@ def parse_time(time_name):
 def parse_lookup_by_id(trucks):
     while True:
         user_input = ask_for_package_id()
-        if user_input == 'q':
+        if user_input == "q":
             show_quit_message()
             sys.exit()
         try:
@@ -46,7 +48,7 @@ def main_interface():
         user_input = ask_for_selection()
 
         # Process trucks based on custom time range
-        if user_input == '1':
+        if user_input == "1":
             start_time = parse_time("start")
             end_time = parse_time("end")
 
@@ -54,34 +56,35 @@ def main_interface():
 
             filtered_logs = [
                 [
-                    package for package in truck.get('log') if
-                    package.get('delivery_time') == 'N/A' or
-                    package.get('delivery_time') >= start_time
+                    package
+                    for package in truck.get("log")
+                    if package.get("delivery_time") == "N/A"
+                    or package.get("delivery_time") >= start_time
                 ]
                 for truck in trucks
             ]
 
             for log, truck in zip(filtered_logs, trucks):
-                truck.assoc('log', log)
+                truck.assoc("log", log)
                 if not log:
-                    truck.assoc('distance', 0)
+                    truck.assoc("distance", 0)
 
             output_travel_data(trucks)
             main_interface()
         # Process trucks and output data
-        elif user_input == '2':
+        elif user_input == "2":
             trucks = initialize_and_process_trucks()
 
             output_travel_data(trucks)
             main_interface()
         # Package lookup
-        elif user_input == '3':
+        elif user_input == "3":
             trucks = initialize_and_process_trucks()
 
             parse_lookup_by_id(trucks)
             main_interface()
         # Quit program
-        elif user_input == 'q':
+        elif user_input == "q":
             show_quit_message()
             sys.exit()
         # Invalid input handling

@@ -38,7 +38,10 @@ class HashTable:
             case [key]:
                 return next((v for k, v in self.__bucket(key) if k == key), None)
             case [*keys]:
-                return [next((v for k, v in self.__bucket(key) if k == key), None) for key in keys]
+                return [
+                    next((v for k, v in self.__bucket(key) if k == key), None)
+                    for key in keys
+                ]
 
     # Clear hash table
     def clear(self):
