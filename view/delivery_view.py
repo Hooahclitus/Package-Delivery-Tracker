@@ -50,8 +50,8 @@ def find_package_by_id(target_id, trucks):
                 )
                 output_length = len(output)
 
-                top_bottom = "+{}+".format("-" * (output_length - 2))
+                header_footer = "+{}+".format("-" * (output_length - 2))
 
-                print(top_bottom)
+                print(header_footer)
                 print(output)
-                print(top_bottom, "\n")
+                print(header_footer, "\n")
