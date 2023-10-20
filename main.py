@@ -1,6 +1,3 @@
-# Program by Charles Reed
-# SID: 010153134
-
 from controller.user_controller import main_interface
 
 
